@@ -1,0 +1,30 @@
+html, body, #container {
+    height: 100vh;
+    width: 100vw;
+    background-color: floralwhite;
+    margin: 0px;
+    padding: 0px;
+}
+
+#frame {
+    --rowsColumns: 16;
+    position: absolute;
+    left: 30vw;
+    bottom: 5vh;
+    background-color: white;
+    width: 40vw;
+    height: 40vw;
+    padding: 0;
+    border: 2px solid black;
+    display: grid;
+    grid-template-columns: repeat(var(--rowsColumns, 16), calc(40vw / var(--rowsColumns, 16)));
+    grid-template-rows: repeat(var(--rowsColumns, 16), calc(40vw / var(--rowsColumns, 16)));
+}
+
+#frame > div {
+    padding: 0px;
+    border: 0px;
+    margin: 0px;
+    width: calc(40vw / var(--rowsColumns, 16));
+    height: calc(40vw / var(--rowsColumns, 16));
+}
