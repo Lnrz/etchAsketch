@@ -36,34 +36,12 @@ function darker(color) {
 
     color = color.split(",");
 
-    color.forEach(str => {
+    color = color.map(str => {
         str = str.trim();
-        console.log(darkerHelper(str));
         return darkerHelper(str);
     });
-    console.log(color[0]);
-    console.log(color[1]);
-    console.log(color[2]);
-    /*
-    let last = color[0];
-    last = darkerHelper(last);
-
-    let middle = color[1];
-    middle = darkerHelper(middle);
-
-    let first = color[2];
-    first = darkerHelper(first);
     
-    return "#" + last + middle + first;
-    */
-    let result = "#";
-
-    for (let i = 0; i < 3; i++) {
-        result = result + color[i];
-        console.log(result);
-    }
-
-    return result;
+    return "#" + color.join("");
 }
 
 function makeDarker(obj) {
@@ -86,12 +64,78 @@ function changeColor(obj) {
 
     div.addEventListener("mouseenter", makeDarker, {once: true});
 }
+
+function changeColorBlack(obj) {
+    const div = obj.target;
+
+    div.style.backgroundColor = "black";
+}
+
+function reset() {
+    while(frame.firstChild) {
+        frame.removeChild(frame.firstChild);
+    }
+
+    let divNum = 0;
+    while (divNum <= 0 || divNum > 100) {
+        divNum = +prompt("Quante caselle per riga e colonna?", "16");
+        if (divNum <= 0 || divNum > 100) {
+            alert("Numero inserito non valido, si prega di inserirne uno valido");
+        }
+    }
+
+    frame.style.setProperty("--rowsColumns", `${divNum}`);
+
+    divNum **= 2;
+    
+    for (let i = 0; i < divNum; i++) {
+        const div = document.createElement("div");
+        if (toBlack) {
+            div.addEventListener("mouseenter", changeColorBlack, {once: true});
+        } else {
+            div.addEventListener("mouseenter", changeColor, {once: true});
+        }
+        frame.appendChild(div);
+    }
+}
+
+function switchColor() {
+
+    toBlack = !toBlack;
+
+    const divs = document.querySelectorAll("#frame > div");
+
+    divs.forEach(div => div.style.backgroundColor = "white");
+
+    if (toBlack) {
+        colorBtn.textContent = "Bianco e nero";
+        
+        divs.forEach(div => {
+            div.removeEventListener("mouseenter", changeColor);
+            div.removeEventListener("mouseenter", makeDarker);
+            div.addEventListener("mouseenter", changeColorBlack, {once: true})
+        });
+    } else {
+        colorBtn.textContent = "Multicolore";
+
+        divs.forEach(div => {
+            div.removeEventListener("mouseenter", changeColorBlack);
+            div.addEventListener("mouseenter", changeColor, {once: true})
+        });
+    }
+}
 //////////////////////////////////////////////////////////////
 
 const frame = document.querySelector("#frame");
+const resetBtn = document.querySelector("#reset");
+const colorBtn = document.querySelector("#color");
+let toBlack = false;
 
 for (let i = 0; i < 256; i++) {
     const div = document.createElement("div");
     div.addEventListener("mouseenter", changeColor, {once: true});
     frame.appendChild(div);
 }
+
+resetBtn.addEventListener("click", reset);
+colorBtn.addEventListener("click", switchColor);

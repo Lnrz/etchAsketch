@@ -28,3 +28,22 @@ html, body, #container {
     width: calc(40vw / var(--rowsColumns, 16));
     height: calc(40vw / var(--rowsColumns, 16));
 }
+
+#reset {
+    position:absolute;
+    background-color: gainsboro;
+    left: 47.8vw;
+    top:5vh;
+    border: 1px solid;
+    border-radius: 15px;
+    padding: 5px 30px;
+    margin: 0px;
+    font-size: 20px;
+    font-weight: 700;
+    font-family: "Oswald", sans-serif;
+}
+
+#reset:active {
+    transform: scale(0.9, 0.9);
+    transition-duration: 100ms;
+}
