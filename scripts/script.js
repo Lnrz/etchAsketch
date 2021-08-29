@@ -109,6 +109,7 @@ function switchColor() {
 
     if (toBlack) {
         colorBtn.textContent = "Bianco e nero";
+        colorBtn.style.left = "var(--blackLeft)";
         
         divs.forEach(div => {
             div.removeEventListener("mouseenter", changeColor);
@@ -116,7 +117,8 @@ function switchColor() {
             div.addEventListener("mouseenter", changeColorBlack, {once: true})
         });
     } else {
-        colorBtn.textContent = "Multicolore";
+        colorBtn.innerHTML = "<span id='rainbow'>Multicolore</span>";
+        colorBtn.style.left = "var(--multicolorLeft)";
 
         divs.forEach(div => {
             div.removeEventListener("mouseenter", changeColorBlack);
